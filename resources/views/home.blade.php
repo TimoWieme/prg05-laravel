@@ -1,0 +1,12 @@
+@extends('layout')
+<title> Home pagina</title>
+@section('nav')
+@endsection
+@section('content')
+    <h1> Welkom!</h1>
+    <p> Welkom op Netflist, het overzicht van Netflix series.</p>
+    <hr>
+    <div id="series">
+
+    </div>
+@endsection
