@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HomePageController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('homepage');
 });
 
 Route::get('/about', [AboutController::class, 'index']);
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

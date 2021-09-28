@@ -14,7 +14,7 @@ class CreateFavoriteSeriesTable extends Migration
     public function up()
     {
         Schema::create('favorite_series', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->integer('user_id');
             $table->integer('serie_id');
             $table->timestamps();

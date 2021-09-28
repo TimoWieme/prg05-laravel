@@ -14,7 +14,7 @@ class CreateSerieGenresTable extends Migration
     public function up()
     {
         Schema::create('serie_genres', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->integer('genre_id');
             $table->integer('serie_id');
             $table->timestamps();
