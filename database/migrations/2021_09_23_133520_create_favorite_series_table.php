@@ -15,8 +15,10 @@ class CreateFavoriteSeriesTable extends Migration
     {
         Schema::create('favorite_series', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('serie_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('serie_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('serie_id')->references('id')->on('series');
             $table->timestamps();
         });
     }

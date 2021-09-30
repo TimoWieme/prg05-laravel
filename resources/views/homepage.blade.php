@@ -8,7 +8,7 @@
     <hr>
 {{--    @foreach($series as $serie)--}}
 {{--    <li>--}}
-{{--        {{$serie['title']}}--}}
+{{--        {{$series['title']}}--}}
 {{--    </li>--}}
 {{--    @endforeach--}}
 @endsection

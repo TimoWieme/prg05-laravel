@@ -30,29 +30,29 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="{{ url('About') }}">About</a>
                 </li>
 
                 @guest
                     @if (Route::has('login'))
-                        <li class="nav-item">
+                        <li class="nav-item {{ Request::is('login') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @endif
 
                     @if (Route::has('register'))
-                        <li class="nav-item">
+                        <li class="nav-item {{ Request::is('register') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
                 @else
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{{ Auth::user()->name }}</a>
+                <li class="nav-item {{ Request::is('profile') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('profile') }}">{{ Auth::user()->name }}</a>
                 </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}"

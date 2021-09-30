@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Series;
+use App\Models\Serie;
 use Illuminate\Http\Request;
 
 class HomePageController extends Controller
@@ -10,9 +10,9 @@ class HomePageController extends Controller
     public function index(){
 
         // Get all series from Database
-        $series = Series::all();
-        dd($series);
-        return view('homepage');
+//        $series = Serie::with('genres')->get();
+//        dd($series);
+        return view('homepage', compact('series'));
     }
 
 }

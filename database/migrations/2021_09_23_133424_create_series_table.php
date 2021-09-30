@@ -16,7 +16,6 @@ class CreateSeriesTable extends Migration
         Schema::create('series', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('genre')->nullable();
             $table->string('image')->nullable();
             $table->integer('year')->nullable();
             $table->integer('seasons')->nullable();
