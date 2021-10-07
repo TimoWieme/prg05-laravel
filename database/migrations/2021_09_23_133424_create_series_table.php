@@ -21,6 +21,7 @@ class CreateSeriesTable extends Migration
             $table->integer('seasons')->nullable();
             $table->integer('episodes')->nullable();
             $table->string('description')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\SerieController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomePageController::class, 'index']);
 
 Route::get('/about', [AboutController::class, 'index']);
+
+Route::get('/serie', [SerieController::class, 'index']);
+
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->middleware('auth');
+
+Route::resource('serie', SerieController::class);
 
 
 Auth::routes();

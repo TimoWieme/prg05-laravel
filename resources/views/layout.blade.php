@@ -66,7 +66,13 @@
                             </form>
 
                 @endguest
-
+                @auth
+                    @if(Auth::user()->role==1)
+                        <li class="nav-item {{ Request::is('Dashboard') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('dashboard') }}">{{ __('Dashboard') }}</a>
+                        </li>
+                    @endif
+                @endauth
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
