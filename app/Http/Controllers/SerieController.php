@@ -28,7 +28,13 @@ class SerieController extends Controller
      */
     public function create()
     {
-        //
+        return view('add');
+    }
+
+    public function read($id){
+        $serie = Serie::find($id);
+        return view('read', ['serie' => $serie]);
+
     }
 
     /**
@@ -39,7 +45,18 @@ class SerieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $serie = new Serie;
+        $serie->title = $request->input('title');
+        $serie->image = $request->input('image');
+        $serie->year = $request->input('year');
+        $serie->seasons = $request->input('seasons');
+        $serie->episodes = $request->input('episodes');
+        $serie->description = $request->input('description');
+        $serie->status = $request->input('status');
+        $serie->save();
+        return redirect()->back()->with('status','Serie Added Succesfully');
+//        $characters = Character::all();
+//        return redirect('/overview');
     }
 
     /**
@@ -63,7 +80,8 @@ class SerieController extends Controller
      */
     public function edit($id)
     {
-        //
+        $serie = Serie::find($id);
+        return view('edit', ['serie' => $serie]);
     }
 
     /**
@@ -75,7 +93,16 @@ class SerieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $serie = Serie::find($id);
+        $serie->title= $request->input('title');
+        $serie->image = $request->input('image');
+        $serie->year = $request->input('year');
+        $serie->seasons = $request->input('seasons');
+        $serie->episodes = $request->input('episodes');
+        $serie->description = $request->input('description');
+        $serie->status = $request->input('status');
+        $serie->update();
+        return redirect()->back()->with('status','Serie Updated Succesfully');
     }
 
     /**
@@ -86,6 +113,8 @@ class SerieController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $serie = Serie::find($id);
+        $serie->delete();
+        return redirect()->back()->with('status','Serie Deleted Successfully');
     }
 }

@@ -23,11 +23,19 @@ Route::get('/about', [AboutController::class, 'index']);
 
 Route::get('/serie', [SerieController::class, 'index']);
 
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->middleware('auth');
 
 Route::resource('serie', SerieController::class);
 
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->middleware('auth');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('add',[SerieController::class,'create']);
+Route::post('add',[SerieController::class,'store']);
+
+Route::get('read/{id}', [SerieController::class, 'read']);
+Route::get('edit/{id}', [SerieController::class, 'edit']);
+Route::put('update/{id}', [SerieController::class, 'update']);
+Route::get('delete/{id}', [SerieController::class, 'destroy']);

@@ -12,6 +12,11 @@
 
 @section('content')
     <h1> Dashboard pagina van : {{ Auth::user()->name }}</h1>
+    <div class="position-relative text-left">
+        <button>
+            <a href="/add">Add Serie</a>
+        </button>
+    </div>
     <div class="card">
         <div class="dashboard">
             <table class="table table-hover">
@@ -28,22 +33,25 @@
                 </tr>
 
                 @foreach($series as $serie)
+                    <tr>
                     <td>{{$serie->id}} </td>
                     <td>{{$serie->title}} </td>
-                    <td>{{$serie->image}} </td>
+                    <td><img src="{{$serie->image}}" alt="" height="50px" width="50px"> </td>
                     <td>{{$serie->year}} </td>
                     <td>{{$serie->seasons}} </td>
                     <td>{{$serie->episodes}} </td>
                     <td>{{$serie->description}} </td>
-                    <td>{{$serie->genres}} </td>
-                    <td><a href="{{ url('details/'.$serie["id"]) }}">Details</a></td>
-                    <td><a href="{{ url('edit-serie/'.$serie["id"]) }}">Edit</a></td>
-                    <td><a href="{{ url('delete-serie/'.$serie["id"]) }}">Delete</a></td>
+                    @foreach($serie->genres as $genre)
+                        <td>{{$genre->name}}</td>
+                    @endforeach
+                    <td><a href="{{ url('read/'. $serie["id"]) }}">Details</a></td>
+                    <td><a href="{{ url('edit/'.$serie["id"]) }}">Edit</a></td>
+                    <td><a href="{{ url('delete/'.$serie["id"]) }}">Delete</a></td>
+                </tr>
                 @endforeach
 
             </table>
         </div>
-    </div>
     </div>
 @endsection
 
