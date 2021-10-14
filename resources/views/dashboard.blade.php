@@ -41,9 +41,12 @@
                     <td>{{$serie->seasons}} </td>
                     <td>{{$serie->episodes}} </td>
                     <td>{{$serie->description}} </td>
+                        <td>
                     @foreach($serie->genres as $genre)
-                        <td>{{$genre->name}}</td>
+                        {{$genre->name}}
+                        <br>
                     @endforeach
+                        </td>
                     <td><a href="{{ url('read/'. $serie["id"]) }}">Details</a></td>
                     <td><a href="{{ url('edit/'.$serie["id"]) }}">Edit</a></td>
                     <td><a href="{{ url('delete/'.$serie["id"]) }}">Delete</a></td>

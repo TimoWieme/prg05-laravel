@@ -36,6 +36,15 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="genre_id" class="col-sm-2 col-form-label">Genres</label>
+                        <div class="col-sm-9">
+                            @foreach($genres as $genre)
+                                <input type="checkbox" id="genre_id" name="genre_id[]" value="{{ $genre->id }}"> {{$genre->name }}</input>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="year" class="col-sm-2 col-form-label">Serie year </label>
                         <div class="col-sm-3">
                             <input type="text" class="form-control" id="year" name="year" placeholder="Year">

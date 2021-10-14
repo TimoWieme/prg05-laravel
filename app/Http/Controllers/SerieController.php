@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use App\Models\Serie;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class SerieController extends Controller
@@ -12,7 +14,7 @@ class SerieController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -24,11 +26,12 @@ class SerieController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
-        return view('add');
+        $genres = Genre::all();
+        return view('add', compact('genres'));
     }
 
     public function read($id){
@@ -54,16 +57,15 @@ class SerieController extends Controller
         $serie->description = $request->input('description');
         $serie->status = $request->input('status');
         $serie->save();
+//        $serie->Genres()->attach($request->input('id'));
         return redirect()->back()->with('status','Serie Added Succesfully');
-//        $characters = Character::all();
-//        return redirect('/overview');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function show(Request $request, Serie $serie)
     {
