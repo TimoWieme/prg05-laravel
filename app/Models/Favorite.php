@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @var \App\Models\Serie $serie
+ **/
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Favorite extends Model
 {
+    protected $fillable = ['user_id', 'serie_id'];
+
     use HasFactory;
 
     public function serie()

@@ -22,9 +22,38 @@
                 </div>
             </div>
         </div>
-    @else
-        <div  class="text-center text-white">
-            <h1>Hello to the page of Netflist</h1>
-        </div>
     @endif
+
+    <div class="favorite">
+{{--        Check if the serie is favorited--}}
+{{--        @if($serie->user()->find(Auth::id()))--}}
+{{--            <form action="{{ route('removeFavorite', $serie)  }}" method="post" class="text-left" enctype="multipart/form-data">--}}
+{{--                @csrf--}}
+{{--                <div class="form-group row">--}}
+{{--                    <div class="col-sm-9 text-center">--}}
+{{--                        <input type="id" id="id" name="id" value="{{$serie->id}}" hidden>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="form-group row justify-content-center text-center">--}}
+{{--                    <div class="col-sm-2">--}}
+{{--                        <button type="submit" class="btn btn-secondary mb-2">Remove Favorite</button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </form>--}}
+{{--        @elseif($serie->user()->find(Auth::id()) === null)--}}
+{{--            <form action="{{ route('addFavorite', $serie)  }}" method="post" class="text-left" enctype="multipart/form-data">--}}
+{{--                @csrf--}}
+{{--                <div class="form-group row ">--}}
+{{--                    <div class="col-sm-9">--}}
+{{--                        <input type="id" id="id" name="id" value="{{$serie->id}}" hidden>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="form-group row justify-content-center">--}}
+{{--                    <div class="col-sm-2 text-center">--}}
+{{--                        <button type="submit" class="btn btn-danger mb-2">Add Favorite</button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </form>--}}
+{{--        @endif--}}
+{{--    </div>--}}
 @endsection

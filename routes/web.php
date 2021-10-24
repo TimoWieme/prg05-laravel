@@ -23,6 +23,9 @@ Route::get('/about', [AboutController::class, 'index']);
 
 Route::get('/serie', [SerieController::class, 'index']);
 
+Route::post('addFavorite', [SerieController::class, 'addFavorite'])->name('addFavorite');
+Route::post('removeFavorite', [SerieController::class, 'removeFavorite'])->name('removeFavorite');
+
 
 Route::resource('serie', SerieController::class);
 

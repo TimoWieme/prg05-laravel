@@ -45,9 +45,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function favorite()
+    public function serie()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(Serie::class);
     }
 
 
@@ -60,6 +60,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'favorites'
     ];
 
     /**
