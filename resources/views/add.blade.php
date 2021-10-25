@@ -4,21 +4,17 @@
      **/
 @endphp
 
-@if(Auth::user()->role!= 1)
-
-@endif
-
 @extends('layout')
 @section('content')
     <div class="container">
         @if(session('status'))
             <h6 class="alert alert-success">{{ session('status') }}</h6>
         @endif
-        <div class="card">
-            <div class="card-header">
+        <div class="add-form">
+            <div class="form-header">
                 <h1>Add New Serie</h1>
             </div>
-            <div class="card-body">
+            <div class="form-body">
                 <form action="{{ url('add') }}" method="POST">
                     @csrf
                     <div class="form-group row">
@@ -38,9 +34,19 @@
                     <div class="form-group row">
                         <label for="genre_id" class="col-sm-2 col-form-label">Genres</label>
                         <div class="col-sm-9">
-                            @foreach($genres as $genre)
-                                <input type="checkbox" id="genre_id" name="genre_id[]" value="{{ $genre->id }}"> {{$genre->name }}</input>
-                            @endforeach
+{{--                            @foreach($genres as $genre)--}}
+{{--                                <label>--}}
+{{--                                    <input id="genre_id" name="genre_id[]" type="checkbox" value="{{ $genre->id }}"--}}
+{{--                                    @if(session('serieGenres') == null)--}}
+{{--                                        ''--}}
+{{--                                    @else--}}
+{{--                                        @foreach(session('serieGenres') as $serieGenre)--}}
+{{--                                            {{ ($serieGenre == ($genre->id)) ? 'checked' : '' }}--}}
+{{--                                        @endforeach--}}
+{{--                                    @endif--}}
+{{--                                    <span> {{ $genre->genre_name }}</span>--}}
+{{--                                </label>--}}
+{{--                            @endforeach--}}
                         </div>
                     </div>
 
@@ -79,6 +85,8 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Serie</button>
+                    <a href="/dashboard" class="btn btn-primary">Back</a>
+
                 </form>
             </div>
         </div>

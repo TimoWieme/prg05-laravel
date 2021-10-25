@@ -41,18 +41,12 @@ class Serie extends Model
 {
     use HasFactory;
 
-//    public function favorite()
-//    {
-//        $cid = auth()->guard('user')->user()!=null ? auth()->guard('user')->user()->id : null;
-//        return $this->hasMany(Favorite::class, 'id', 'serie_id')->where('user_id');
-//    }
-
     public function genres()
     {
         return $this->belongsToMany(Genre::class);
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsToMany(User::class);
     }

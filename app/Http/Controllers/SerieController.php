@@ -8,7 +8,10 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class SerieController extends Controller
 {
@@ -24,6 +27,24 @@ class SerieController extends Controller
         return view('serie', compact('series'));
     }
 
+    public function admin()
+    {
+        if (auth()->user()->role === 1) {
+            $series = Serie::all();
+            $genres = Genre::all();
+            $user = User::find(auth()->id());
+            return view('/dashboard', compact('series', 'genres', 'user'));
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function showGenre(Request $request, Genre $genres)
+    {
+        $genres = Genre::all();
+        return view('serie', compact('genres'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -33,7 +54,8 @@ class SerieController extends Controller
     {
         if (auth()->user()->role === 1) {
             $genres = Genre::all();
-            return view('add', compact('genres'));
+            $user = User::find(auth()->id());
+            return view('add', compact('genres', 'user'));
         } else {
             return redirect('/');
         }
@@ -41,50 +63,60 @@ class SerieController extends Controller
 
     public function read($id)
     {
-        $serie = Serie::find($id);
-        return view('read', ['serie' => $serie]);
-
+        if (auth()->user()->role === 1) {
+            $serie = Serie::find($id);
+            return view('read', ['serie' => $serie]);
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        $serie = new Serie;
-        $serie->title = $request->input('title');
-        $serie->image = $request->input('image');
-        $serie->year = $request->input('year');
-        $serie->seasons = $request->input('seasons');
-        $serie->episodes = $request->input('episodes');
-        $serie->description = $request->input('description');
-        $serie->status = $request->input('status');
-        $serie->save();
-//        $serie->Genres()->attach($request->input('id'));
-        return redirect()->back()->with('status', 'Serie Added Succesfully');
+        if (auth()->user()->role === 1) {
+            $serie = new Serie;
+            $serieGenres = $request->input('genre_id');
+            $serie->title = $request->input('title');
+            $serie->image = $request->input('image');
+            $serie->year = $request->input('year');
+            $serie->seasons = $request->input('seasons');
+            $serie->episodes = $request->input('episodes');
+            $serie->description = $request->input('description');
+            $serie->status = $request->input('status');
+            $serie->save();
+            //        $serie->Genres()->attach($request->input('id'));
+            return redirect()->back()->with('status', 'Serie Added Succesfully');
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return Application|Factory|View|\Illuminate\Http\Response
+     * @param Request $request
+     * @param Serie $serie
+     * @return Application|Factory|View
      */
+
     public function show(Request $request, Serie $serie)
     {
-        return view('serie', compact('serie'));
-
-//        dd($serie);
+        $genres = Genre::all();
+        $user = User::find(auth()->id());
+        return view('serie', compact('serie', 'genres', 'user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Serie $serie
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
@@ -92,6 +124,7 @@ class SerieController extends Controller
             $serie = Serie::find($id);
             return view('edit', ['serie' => $serie]);
         }
+        return redirect('/');
     }
 
     /**
@@ -99,9 +132,9 @@ class SerieController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         if (auth()->user()->role === 1) {
             $serie = Serie::find($id);
@@ -112,7 +145,12 @@ class SerieController extends Controller
             $serie->episodes = $request->input('episodes');
             $serie->description = $request->input('description');
             $serie->status = $request->input('status');
-            $serie->update();
+            //Save data
+            $serie->save();
+            //Detach old relations
+            $serie->genres()->detach();
+            //Atach new relations
+            $serie->genres()->attach($request->input('genre_id'));
             return redirect()->back()->with('status', 'Serie Updated Succesfully');
         } else {
             return redirect('/');
@@ -122,13 +160,14 @@ class SerieController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Serie $serie
+     * @return Application|RedirectResponse|Redirector
      */
     public function destroy($id)
     {
         if (auth()->user()->role === 1) {
             $serie = Serie::find($id);
+            $serie->genres()->detach();
             $serie->delete();
             return redirect()->back()->with('status', 'Serie Deleted Successfully');
         } else {
@@ -136,7 +175,7 @@ class SerieController extends Controller
         }
     }
 
-    public function addFavorite(Request $request, Serie $serie)
+    public function addFavorite(Request $request, Serie $serie): RedirectResponse
     {
         $user = User::find(auth()->id());
         $serie = Serie::find($request->input('id'));
@@ -145,7 +184,7 @@ class SerieController extends Controller
         return redirect()->back()->with('status', 'Serie added to favorites');
     }
 
-    public function removeFavorite(Request $request, Serie $serie)
+    public function removeFavorite(Request $request, Serie $serie): RedirectResponse
     {
         $user = User::find(auth()->id());
         $serie = Serie::find($request->input('id'));
