@@ -27,17 +27,6 @@ class SerieController extends Controller
         return view('serie', compact('series'));
     }
 
-    public function admin()
-    {
-        if (auth()->user()->role === 1) {
-            $series = Serie::all();
-            $genres = Genre::all();
-            $user = User::find(auth()->id());
-            return view('/dashboard', compact('series', 'genres', 'user'));
-        } else {
-            return redirect('/');
-        }
-    }
 
     public function showGenre(Request $request, Genre $genres)
     {
@@ -74,10 +63,10 @@ class SerieController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         if (auth()->user()->role === 1) {
             $serie = new Serie;
@@ -130,7 +119,7 @@ class SerieController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
      * @return RedirectResponse
      */
@@ -191,5 +180,14 @@ class SerieController extends Controller
         $serie->save();
         $serie->user()->detach($user);
         return redirect()->back()->with('status', 'Serie removed from favorites');
+    }
+
+    public function updateStatus(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $serie = Serie::findOrFail($request->serieid);
+        $serie->status = $request->status;
+        $serie->save();
+
+        return response()->json(['status' => 'Anime status updated successfully.']);
     }
 }

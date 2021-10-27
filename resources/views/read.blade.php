@@ -3,7 +3,7 @@
      * @var \App\Models\Serie $serie
      **/
 @endphp
-@extends('layout')
+@extends('layouts.defaultlayout')
 <title> Detail pagina</title>
 @section('nav')
 @endsection
@@ -13,10 +13,10 @@
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 dark:text-white">
                 <div  class="text-center">
                     <img style="height: 300px" alt="" src="{{$serie->image}}">
-                    <h1>Details van : {{$serie->title }}</h1>
-                    <h6>{{$serie->seasons}} Seizoen(en)</h6>
-                    <h6>{{$serie->episodes}} Afleveringen</h6>
-                    <h5> Beschrijving:</h5>
+                    <h1>Details of : {{$serie->title }}</h1>
+                    <h6>{{$serie->seasons}} Season(s)</h6>
+                    <h6>{{$serie->episodes}} Episodes</h6>
+                    <h5> Description:</h5>
                     <h6>{{$serie->description}}</h6>
                 </div>
             </div>

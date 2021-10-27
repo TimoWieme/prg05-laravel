@@ -4,7 +4,7 @@
     *
     **/use App\Models\Serie;
 @endphp
-@extends('layout')
+@extends('layouts.defaultlayout')
 <title> Detail pagina</title>
 @section('nav')
 @endsection

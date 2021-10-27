@@ -17,6 +17,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('scripts')
     <title>Document</title>
 </head>
 <body>
@@ -33,9 +34,9 @@
                 <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="{{ url('About') }}">About</a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="{{ url('About') }}">About</a>--}}
+{{--                </li>--}}
 
                 @guest
                     @if (Route::has('login'))
@@ -86,6 +87,9 @@
     @yield('content')
 </div>
 </body>
+<div>
+    @yield('footer')
+</div>
     <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

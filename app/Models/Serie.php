@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Serie
@@ -41,12 +42,12 @@ class Serie extends Model
 {
     use HasFactory;
 
-    public function genres()
+    public function genres() : BelongsToMany
     {
         return $this->belongsToMany(Genre::class);
     }
 
-    public function user()
+    public function user() : BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }

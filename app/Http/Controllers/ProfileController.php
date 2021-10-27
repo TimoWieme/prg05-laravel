@@ -6,37 +6,93 @@ use App\Models\Genre;
 use App\Models\Serie;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use function React\Promise\all;
 
 class ProfileController extends Controller
 {
-    public function index(){
+    /**
+     * Display a listing of the resource.
+     *
+     * @return void
+     */
+    public function index()
+    {
         $users = User::all();
-        return redirect('/');
+//        return redirect('/');
     }
 
-    public function show(User $user)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return void
+     */
+    public function create()
     {
-        $user = User::find(auth()->id());
-        $series = Serie::all();
-        if (auth()->user()){
-            $user = User::find($user->id);
-            return view('users.profile', compact('user', 'series'));
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return void
+     */
+
+    public function show(Request $request, $id)
+    {
+        if (auth()->user()->id == intval($id)){
+            $user = User::find($id);
+            $series = Serie::all();
+            $genres = Genre::all();
+            return view('profile', compact('user', 'series', 'genres'));
         }else{
             return redirect('/');
         }
     }
 
-    public function update(Request $request,User $user)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return void
+     */
+    public function edit($id)
     {
-        if (auth()->user()){
-            $user = User::find($user->id);
-            $user->name = $request->input('name');
-            $user->email = $request->input('email');
-            //        save data
-            $user->save();
-            return redirect()->route('user.show', $user)->with('status', "Profile Updated");
-        }else{
-            return redirect()->route('/');
-        }
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param  int  $id
+     * @return void
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return void
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

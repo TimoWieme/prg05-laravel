@@ -1,14 +1,15 @@
-@extends('layout')
+@extends('layouts.defaultlayout')
 <title> Home pagina</title>
 @section('nav')
 @endsection
 @section('content')
-    <h1> Welkom!</h1>
-    <p> Welkom op Netflist, het overzicht van Netflix series.</p>
+    <h1> Welcome!</h1>
+    <p> Welcome to Netflist! The overview of Netflix series.</p>
     <hr>
 
     <div class="container" id="container">
     @foreach($series as $serie)
+        @if($serie->status=== 1)
         <div class="card-box">
             <a href="{{ route('serie.show', $serie) }}">
             <div class="image">
@@ -27,5 +28,6 @@
             </div>
             </a>
         </div>
+    @endif
     @endforeach
 @endsection

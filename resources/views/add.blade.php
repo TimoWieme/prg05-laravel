@@ -4,7 +4,7 @@
      **/
 @endphp
 
-@extends('layout')
+@extends('layouts.defaultlayout')
 @section('content')
     <div class="container">
         @if(session('status'))
