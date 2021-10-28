@@ -61,10 +61,11 @@ class UserController extends Controller
             $user = Auth::user();
             $series = Serie::all();
             $genres = Genre::all();
+            $favorites = $user->serie()->get();
 //            $favorites = Serie::all()->favorites();
-//            $favorites = User::where('serie_user', user var)->get();
+//            $favorites = User::where('serie_user', user var $id)->get();
 //            dd($favorites);
-            return view('profile', compact('user', 'series', 'genres'));
+            return view('profile', compact('user', 'series', 'genres', 'favorites'));
         }else{
             return redirect('/');
         }
