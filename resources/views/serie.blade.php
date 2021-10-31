@@ -17,8 +17,9 @@
                     <h1>Details van : {{$serie->title }}</h1>
                     <h6>{{$serie->seasons}} Seizoen(en)</h6>
                     <h6>{{$serie->episodes}} Afleveringen</h6>
+                    <h6> Genres:</h6>
                     @foreach($serie->genres as $genre)
-                        <span> {{$genre->genre_name}}</span>
+                        <span> {{$genre->name}}</span>
                     @endforeach
                     <h5> Beschrijving:</h5>
                     <h6>{{$serie->description}}</h6>
@@ -28,8 +29,9 @@
     @endif
 
     <div class="favorite">
-{{--        Check if the serie is favorited--}}
+{{--        Check if the serie is related to user (made favorite)--}}
         @if($serie->user()->find(Auth::id()))
+{{--            If the serie is favorited, remove from favorites if button clicked--}}
             <form action="{{ route('removeFavorite', $serie)  }}" method="post" class="text-left" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
@@ -39,11 +41,15 @@
                 </div>
                 <div class="form-group row justify-content-center text-center">
                     <div class="col-sm-2">
-                        <button type="submit" class="btn btn-secondary mb-2">Remove Favorite</button>
+                        <button type="submit" class="btn btn-danger mb-2">Remove Favorite</button>
+                        <a href="/" class="btn btn-primary mb-2">Back</a>
+
                     </div>
                 </div>
             </form>
+            {{--        Check if the serie is related to user (made favorite)--}}
         @elseif($serie->user()->find(Auth::id()) === null)
+{{--            Serie is not favorite yet, make favorite if button clicked--}}
             <form action="{{ route('addFavorite', $serie)  }}" method="post" class="text-left" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row ">
@@ -53,7 +59,8 @@
                 </div>
                 <div class="form-group row justify-content-center">
                     <div class="col-sm-2 text-center">
-                        <button type="submit" class="btn btn-danger mb-2">Add Favorite</button>
+                        <button type="submit" class="btn btn-success mb-2">Add Favorite</button>
+                        <a href="/" class="btn btn-primary mb-2">Back</a>
                     </div>
                 </div>
             </form>

@@ -57,31 +57,34 @@ class UserController extends Controller
      */
     public function show()
     {
-        if (Auth::user()){
             $user = Auth::user();
             $series = Serie::all();
             $genres = Genre::all();
             $favorites = $user->serie()->get();
-//            $favorites = Serie::all()->favorites();
-//            $favorites = User::where('serie_user', user var $id)->get();
-//            dd($favorites);
+            // If you have 2 or more favorites
+            if(count($favorites) >= 2){
             return view('profile', compact('user', 'series', 'genres', 'favorites'));
-        }else{
-            return redirect('/');
+        } else {
+                abort( response('You need 2 or more favorites to enter this page', 401) );
+//                return redirect('/');
         }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Application|Factory|View|void
      */
     public function edit(Request $request)
     {
-        if (Auth::user()) {
-            $user = Auth::user();
-            return view('editprofile', compact('user'));
+        $user = Auth::user();
+        $favorites = $user->serie()->get();
+        // If favorites = 2 or more, you can enter this page, else abort.
+        if(count($favorites) >= 2) {
+            return view('editprofile', compact('user', 'favorites'));
+        }else{
+            abort( response('You need 2 or more favorites to enter this page', 401) );
         }
     }
 
@@ -93,7 +96,6 @@ class UserController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        if (Auth::user()) {
             $user = Auth::user();
             $user->name = $request->input('name');
             $user->email = $request->input('email');
@@ -101,6 +103,9 @@ class UserController extends Controller
 
             //Save data
             $user->save();
+        $favorites = $user->serie()->get();
+
+        if(count($favorites) >= 2) {
             return redirect()->back()->with('status', 'Information Updated Succesfully');
         } else {
             return redirect('/');
@@ -110,11 +115,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+//    public function destroy($id)
+//    {
+//        //
+//    }
 }

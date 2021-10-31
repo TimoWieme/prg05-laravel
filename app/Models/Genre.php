@@ -28,7 +28,9 @@ class Genre extends Model
 {
     use HasFactory;
 
-    public function series() : BelongsToMany
+    public $timestamps = false;
+
+    public function serie() : BelongsToMany
     {
         return $this->belongsToMany(Serie::class);
     }

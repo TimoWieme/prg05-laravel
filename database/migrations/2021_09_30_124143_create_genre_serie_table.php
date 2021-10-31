@@ -19,8 +19,6 @@ class CreateGenreSerieTable extends Migration
             $table->unsignedBigInteger('serie_id');
             $table->foreign('genre_id')->references('id')->on('genres');
             $table->foreign('serie_id')->references('id')->on('series');
-
-            $table->timestamps();
         });
     }
 

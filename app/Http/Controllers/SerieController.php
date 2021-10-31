@@ -22,9 +22,12 @@ class SerieController extends Controller
      */
     public function index()
     {
-        $series = Serie::all();
-        $user = User::find(auth()->id());
-        return view('serie', compact('series'));
+        return view('search', [
+            'series' => Serie::latest()->filter(request(['search', 'genre']))->get()->sortBy('id'),
+            'genres' => Genre::all(),
+            'currentGenre' => Genre::firstWhere('id', request('genre')),
+            'user' => User::find(auth()->id())
+        ]);
     }
 
 
@@ -41,6 +44,7 @@ class SerieController extends Controller
      */
     public function create()
     {
+        // If user has role 1 (admin role)
         if (auth()->user()->role === 1) {
             $genres = Genre::all();
             $user = User::find(auth()->id());
@@ -52,6 +56,7 @@ class SerieController extends Controller
 
     public function read($id)
     {
+        // If user has role 1 (admin role)
         if (auth()->user()->role === 1) {
             $serie = Serie::find($id);
             return view('read', ['serie' => $serie]);
@@ -68,6 +73,7 @@ class SerieController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // If user has role 1 (admin role)
         if (auth()->user()->role === 1) {
             $serie = new Serie;
             $serieGenres = $request->input('genre_id');
@@ -109,6 +115,7 @@ class SerieController extends Controller
      */
     public function edit($id)
     {
+        // If user has role 1 (admin role)
         if (auth()->user()->role === 1) {
             $serie = Serie::find($id);
             return view('edit', ['serie' => $serie]);
@@ -125,6 +132,7 @@ class SerieController extends Controller
      */
     public function update(Request $request, int $id)
     {
+        // If user has role 1 (admin role)
         if (auth()->user()->role === 1) {
             $serie = Serie::find($id);
             $serie->title = $request->input('title');
@@ -154,6 +162,7 @@ class SerieController extends Controller
      */
     public function destroy($id)
     {
+        // If user has role 1 (admin role)
         if (auth()->user()->role === 1) {
             $serie = Serie::find($id);
             $serie->genres()->detach();
@@ -166,18 +175,24 @@ class SerieController extends Controller
 
     public function addFavorite(Request $request, Serie $serie): RedirectResponse
     {
+        // Find user ID
         $user = User::find(auth()->id());
+        // Request serie ID
         $serie = Serie::find($request->input('id'));
         $serie->save();
+        // Attach user to the serie
         $serie->user()->attach($user);
         return redirect()->back()->with('status', 'Serie added to favorites');
     }
 
     public function removeFavorite(Request $request, Serie $serie): RedirectResponse
     {
+        // Find user id
         $user = User::find(auth()->id());
+        // Request serie id
         $serie = Serie::find($request->input('id'));
         $serie->save();
+        // Remove user from serie
         $serie->user()->detach($user);
         return redirect()->back()->with('status', 'Serie removed from favorites');
     }
@@ -188,6 +203,7 @@ class SerieController extends Controller
         $serie->status = $request->status;
         $serie->save();
 
-        return response()->json(['status' => 'Anime status updated successfully.']);
+        return response()->json(['status' => 'Serie status updated successfully.']);
     }
+
 }

@@ -10,7 +10,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -53,7 +52,7 @@
                 @else
 
                 <li class="nav-item {{ Request::is('profile') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('profile') }}">{{ Auth::user()->name }}</a>
+                    <a class="nav-link" href='/profile'>{{ Auth::user()->name }}</a>
                 </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}"
@@ -75,9 +74,11 @@
                     @endif
                 @endauth
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <form class="form-inline my-2 my-lg-0" action="/search" method="POST">
+                @csrf
+                <label for="search"></label>
+                <input class="form-control mr-sm-2" type="text" name="search" id="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" name="searchButton" type="submit">Search</button>
             </form>
         </div>
     </nav>

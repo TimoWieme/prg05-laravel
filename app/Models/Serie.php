@@ -41,7 +41,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Serie extends Model
 {
     use HasFactory;
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['genre'] ?? false, function ($query, $genre) {
+            //select all from genre_serie and join the series on genre_serie.serie_id=series.id
+            $query
+                ->select('*')
+                ->from('genre_serie')
+                ->join('series', 'genre_serie.genre_id', '=', 'series.id')
+                ->where('genre_serie.genre_id', '=', $genre);
 
+        });
+    }
     public function genres() : BelongsToMany
     {
         return $this->belongsToMany(Genre::class);

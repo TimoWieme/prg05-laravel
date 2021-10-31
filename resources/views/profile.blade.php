@@ -9,7 +9,6 @@ use App\Models\Serie;
 @endsection
 
 @section('content')
-
     <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 text-center text-white">
                 <div class="container">
@@ -47,7 +46,7 @@ use App\Models\Serie;
                                             <div class="content-box">
                                                 <h2>{{$serie->title}}</h2>
                                                 <div class="detail">
-                                                    <h6>{{$serie->seasons}} Season(s)</h6>
+                                                       <h6>{{$serie->seasons}} Season(s)</h6>
                                                     <h6> Genres: </h6>
                                                     @foreach($serie->genres as $genre)
                                                         <h6> {{$genre->name}} </h6>
@@ -62,5 +61,6 @@ use App\Models\Serie;
             </div>
         </div>
     </div>
+{{--    @endif--}}
     @endsection
 

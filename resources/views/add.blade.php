@@ -32,25 +32,6 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="genre_id" class="col-sm-2 col-form-label">Genres</label>
-                        <div class="col-sm-9">
-{{--                            @foreach($genres as $genre)--}}
-{{--                                <label>--}}
-{{--                                    <input id="genre_id" name="genre_id[]" type="checkbox" value="{{ $genre->id }}"--}}
-{{--                                    @if(session('serieGenres') == null)--}}
-{{--                                        ''--}}
-{{--                                    @else--}}
-{{--                                        @foreach(session('serieGenres') as $serieGenre)--}}
-{{--                                            {{ ($serieGenre == ($genre->id)) ? 'checked' : '' }}--}}
-{{--                                        @endforeach--}}
-{{--                                    @endif--}}
-{{--                                    <span> {{ $genre->genre_name }}</span>--}}
-{{--                                </label>--}}
-{{--                            @endforeach--}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
                         <label for="year" class="col-sm-2 col-form-label">Serie year </label>
                         <div class="col-sm-3">
                             <input type="text" class="form-control" id="year" name="year" placeholder="Year">
@@ -86,7 +67,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Add Serie</button>
                     <a href="/dashboard" class="btn btn-primary">Back</a>
-
                 </form>
             </div>
         </div>

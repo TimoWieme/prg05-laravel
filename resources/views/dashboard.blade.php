@@ -63,16 +63,15 @@
                     <td><a href="{{ url('read/'. $serie["id"]) }}">Details</a></td>
                     <td><a href="{{ url('edit/'.$serie["id"]) }}">Edit</a></td>
                     <td><a href="{{ url('delete/'.$serie["id"]) }}">Delete</a></td>
-
                 </tr>
                 @endforeach
-
             </table>
         </div>
     </div>
 @endsection
 @section('footer')
     <script>
+        // Javascript for status switch
         let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
         elems.forEach(function(html) {
             let switchery = new Switchery(html,  { size: 'small' });

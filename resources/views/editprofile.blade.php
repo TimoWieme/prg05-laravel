@@ -30,9 +30,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="profilepicture" class="col-sm-2 col-form-label">Profile Picture</label>
+                        <label for="profilePicture" class="col-sm-2 col-form-label">Profile Picture</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="profilepicture" name="profilepicture" value="{{$user->profilePicture}}">
+                            <input type="text" class="form-control" id="profilePicture" name="profilePicture" value="{{$user->profilePicture}}">
                         </div>
 
 

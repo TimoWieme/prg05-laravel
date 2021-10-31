@@ -17,8 +17,9 @@ class SerieUser extends Migration
                 $table->id();
                 $table->unsignedBigInteger('user_id');
                 $table->unsignedBigInteger('serie_id');
-                $table->foreign('user_id')->references('id')->on('users');
-                $table->foreign('serie_id')->references('id')->on('series');
+                // On delete, remove relations aswell. Otherwise cant delete serie in dashboard if its favorited.
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
+                $table->foreign('serie_id')->references('id')->on('series')->onDelete('cascade');;
                 $table->timestamps();
             });
         }
